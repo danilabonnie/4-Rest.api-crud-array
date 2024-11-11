@@ -48,8 +48,8 @@ formulario.addEventListener('submit', (event) => {
   let descripcion = formulario.descripcion.value
   let precio = formulario.precio.value
   // let imagen = img.src = 'th.jpg'
-  let imagen = 'th.jpg'
-  console.log(titulo,descripcion,precio);
+  let imagen = formulario.imagen.value
+  console.log(titulo,descripcion,precio,imagen);
 
   // Objetos con los datos obtenidos en el formulario
   let newDatos = {titulo: titulo, descripcion: descripcion, precio: precio, imagen: imagen }
@@ -191,16 +191,18 @@ const editar = (id) => {
   formEditar.titulo.value = prodEditar.titulo
   formEditar.descripcion.value = prodEditar.descripcion
   formEditar.precio.value = prodEditar.precio
+  formEditar.imagen.value = prodEditar.imagen
 }
 
   formEditar.addEventListener('submit', (event) => {
     event.preventDefault ();
     //creo objeto con nuevos datos
     const nuevosDatos = {
-      id: formEditar.id.value,
       titulo: formEditar.titulo.value,
       descripcion: formEditar.descripcion.value,
-      precio: formEditar.precio.value
+      precio: formEditar.precio.value,
+      imagen: formEditar.imagen.value,
+      id: formEditar.id.value
     }
 
     if (!nuevosDatos.id || !nuevosDatos.titulo || !nuevosDatos.descripcion || !nuevosDatos.precio) {
@@ -218,7 +220,7 @@ const editar = (id) => {
     console.log(nuevosDatosJson)
     const enviarNewDatos = async()=>{
       try{
-        const enviarDatos = await fetch(endpoint+'/'+nuevosDatos.id,{
+        const enviarDatos = await fetch(endpoint,{
           method: 'put',
           headers: {
             'content-type': 'application/json'
